@@ -41,7 +41,7 @@ function getCss(theme: string, fontSize: string) {
         flex-direction: column;
         text-align: center;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
     }
 
     .logo-wrapper {
@@ -86,21 +86,6 @@ function getCss(theme: string, fontSize: string) {
         border: 0.75rem solid ${white};
         box-shadow: 1.75rem 1.75rem 0 0 ${yellow};
         margin-bottom: 8rem;
-    }
-    
-    .handle {
-        font-family: 'Work Sans';
-        font-size: 4rem;
-        display: flex;
-        flex-direction: column;
-        font-weight: 400;
-        color: ${white};
-        background-color: ${black};
-        padding: 2rem;
-        border: 0.5rem solid ${white};
-        box-shadow: 1.25rem 1.25rem 0 0 ${yellow};
-        line-height: 1;
-        background-color: 
     }`;
 }
 
@@ -123,8 +108,6 @@ export function getHtml(parsedReq: ParsedRequest) {
         </div>
 
         <div class="heading">${emojify(md ? marked(text) : sanitizeHtml(text))}</div>
-
-        <div class="handle">@whitep4nth3r</div>
     </body>
 </html>`;
 }
