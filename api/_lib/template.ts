@@ -1,38 +1,38 @@
-
-import { readFileSync } from 'fs';
-import marked from 'marked';
-import { sanitizeHtml } from './sanitizer';
-import { ParsedRequest } from './types';
-const twemoji = require('twemoji');
-const twOptions = { folder: 'svg', ext: '.svg' };
+import { readFileSync } from "fs";
+import marked from "marked";
+import { sanitizeHtml } from "./sanitizer";
+import { ParsedRequest } from "./types";
+const twemoji = require("twemoji");
+const twOptions = { folder: "svg", ext: ".svg" };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
-const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString('base64');
-const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
-const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
+const rglr = readFileSync(`${__dirname}/../_fonts/WorkSans-Regular.woff2`).toString("base64");
+const bold = readFileSync(`${__dirname}/../_fonts/WorkSans-Bold.woff2`).toString("base64");
+const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString("base64");
 
 function getCss(theme: string, fontSize: string) {
-    let background = 'white';
-    let foreground = 'black';
-    let radial = 'lightgray';
+  const black = "#0f111a";
+  const white = "#ffffff";
+  const yellow = "#ffb626";
 
-    if (theme === 'dark') {
-        background = 'black';
-        foreground = 'white';
-        radial = 'dimgray';
-    }
-    return `
+  let background = yellow;
+
+  if (theme === "dark") {
+    background = black;
+  }
+
+  return `
     @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: normal;
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 400;
         src: url(data:font/woff2;charset=utf-8;base64,${rglr}) format('woff2');
     }
 
     @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: bold;
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 600;
         src: url(data:font/woff2;charset=utf-8;base64,${bold}) format('woff2');
     }
 
@@ -41,16 +41,17 @@ function getCss(theme: string, fontSize: string) {
         font-style: normal;
         font-weight: normal;
         src: url(data:font/woff2;charset=utf-8;base64,${mono})  format("woff2");
-      }
+    }
 
     body {
         background: ${background};
-        background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);
-        background-size: 100px 100px;
+        font-size: 16px;
         height: 100vh;
+        padding: 2rem 4rem;
         display: flex;
         text-align: center;
         align-items: center;
+        align-content: stretch;
         justify-content: center;
     }
 
@@ -74,11 +75,11 @@ function getCss(theme: string, fontSize: string) {
     }
 
     .logo {
-        margin: 0 75px;
+        margin: 24px;
     }
 
     .plus {
-        color: #BBB;
+        color: ${white};
         font-family: Times New Roman, Verdana;
         font-size: 100px;
     }
@@ -93,19 +94,38 @@ function getCss(theme: string, fontSize: string) {
         margin: 0 .05em 0 .1em;
         vertical-align: -0.1em;
     }
+
+    .handle {
+        font-family: 'Work Sans';
+        font-size: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-self: flex-end;
+        margin-top: 6rem;
+        font-weight: 600;
+        color: ${black};
+        line-height: 1;
+    }
     
     .heading {
-        font-family: 'Inter', sans-serif;
+        display: flex;
+        font-family: 'Work Sans';
         font-size: ${sanitizeHtml(fontSize)};
-        font-style: normal;
-        color: ${foreground};
-        line-height: 1.8;
+        font-weight: 400;
+        line-height: 1.4;
+        color: ${white};
+        font-weight: 400;
+        background-color: ${black};
+        padding: 0.5rem 1rem;
+        padding: 0.5rem 1rem;
+        border: 0.75rem solid ${white};
+        box-shadow: 2rem 2rem 0 0 ${white};
     }`;
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
-    return `<!DOCTYPE html>
+  const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
+  return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
     <title>Generated Image</title>
@@ -115,32 +135,31 @@ export function getHtml(parsedReq: ParsedRequest) {
     </style>
     <body>
         <div>
-            <div class="spacer">
             <div class="logo-wrapper">
-                ${images.map((img, i) =>
-                    getPlusSign(i) + getImage(img, widths[i], heights[i])
-                ).join('')}
+                ${images
+                  .map((img, i) => getPlusSign(i) + getImage(img, widths[i], heights[i]))
+                  .join("")}
             </div>
-            <div class="spacer">
-            <div class="heading">${emojify(
-                md ? marked(text) : sanitizeHtml(text)
-            )}
+
+            <div class="heading">${emojify(md ? marked(text) : sanitizeHtml(text))}
             </div>
+
+            <div class="handle">@whitep4nth3r</div>
         </div>
     </body>
 </html>`;
 }
 
-function getImage(src: string, width ='auto', height = '225') {
-    return `<img
+function getImage(src: string, width = "auto", height = "225") {
+  return `<img
         class="logo"
         alt="Generated Image"
         src="${sanitizeHtml(src)}"
         width="${sanitizeHtml(width)}"
         height="${sanitizeHtml(height)}"
-    />`
+    />`;
 }
 
 function getPlusSign(i: number) {
-    return i === 0 ? '' : '<div class="plus">+</div>';
+  return i === 0 ? "" : '<div class="plus">+</div>';
 }
