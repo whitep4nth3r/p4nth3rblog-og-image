@@ -35,7 +35,7 @@ function getCss(theme: string, fontSize: string) {
         background-size: cover;
         font-size: 16px;
         height: 100vh;
-        padding: 6rem;
+        padding: 6rem 4rem;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -80,7 +80,7 @@ function getCss(theme: string, fontSize: string) {
         color: ${white};
         font-weight: 400;
         background-color: ${black};
-        width: 80%;
+        width: 100%;
         box-sizing: border-box;
         padding: 2.5rem 2rem;
         border: 0.75rem solid ${white};
