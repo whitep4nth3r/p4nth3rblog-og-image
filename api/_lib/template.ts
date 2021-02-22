@@ -80,7 +80,7 @@ function getCss(theme: string, fontSize: string) {
         color: ${white};
         font-weight: 400;
         background-color: ${black};
-        width: 100%;
+        width: 80%;
         box-sizing: border-box;
         padding: 2.5rem 2rem;
         border: 0.75rem solid ${white};
