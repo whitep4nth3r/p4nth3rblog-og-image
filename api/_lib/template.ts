@@ -7,19 +7,18 @@ const twOptions = { folder: "svg", ext: ".svg" };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
 const rglr = readFileSync(`${__dirname}/../_fonts/WorkSans-Regular.woff2`).toString("base64");
-const bold = readFileSync(`${__dirname}/../_fonts/WorkSans-Bold.woff2`).toString("base64");
-const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString("base64");
 
 function getCss(theme: string, fontSize: string) {
   const black = "#0f111a";
   const white = "#ffffff";
   const yellow = "#ffb626";
+  const red = "#f11012";
 
-  let background = yellow;
-
-  if (theme === "dark") {
-    background = black;
-  }
+  const backgroundColor = theme === "light" ? red : black;
+  const backgroundImageUrl =
+    theme === "light"
+      ? "https://p4nth3rlabs.netlify.app/assets/bg-red-169.png"
+      : "https://p4nth3rlabs.netlify.app/assets/bg-black-169.png";
 
   return `
     @font-face {
@@ -29,41 +28,20 @@ function getCss(theme: string, fontSize: string) {
         src: url(data:font/woff2;charset=utf-8;base64,${rglr}) format('woff2');
     }
 
-    @font-face {
-        font-family: 'Work Sans';
-        font-style: normal;
-        font-weight: 600;
-        src: url(data:font/woff2;charset=utf-8;base64,${bold}) format('woff2');
-    }
-
-    @font-face {
-        font-family: 'Vera';
-        font-style: normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${mono})  format("woff2");
-    }
-
     body {
-        background: ${background};
+        background: ${backgroundColor};
+        background-image: url(${backgroundImageUrl});
+        background-position: center;
+        background-size: cover;
         font-size: 16px;
         height: 100vh;
-        padding: 2rem 4rem;
+        padding: 6rem;
+        box-sizing: border-box;
         display: flex;
+        flex-direction: column;
         text-align: center;
         align-items: center;
-        align-content: stretch;
-        justify-content: center;
-    }
-
-    code {
-        color: #D400FF;
-        font-family: 'Vera';
-        white-space: pre-wrap;
-        letter-spacing: -5px;
-    }
-
-    code:before, code:after {
-        content: '\`';
+        justify-content: flex-start;
     }
 
     .logo-wrapper {
@@ -72,39 +50,29 @@ function getCss(theme: string, fontSize: string) {
         align-content: center;
         justify-content: center;
         justify-items: center;
+        flex-direction: column;
+        position: relative;
+        margin-bottom: 1rem;
     }
 
     .logo {
-        margin: 24px;
+
+    }
+
+    .logo-banner {
+        width: 400px;
+        position: absolute;
+        bottom: -48px;
     }
 
     .plus {
         color: ${white};
-        font-family: Times New Roman, Verdana;
-        font-size: 100px;
-    }
-
-    .emoji {
-        height: 1em;
-        width: 1em;
-        margin: 0 .05em 0 .1em;
-        vertical-align: -0.1em;
-    }
-
-    .handle {
         font-family: 'Work Sans';
-        font-size: 4rem;
-        display: flex;
-        flex-direction: column;
-        align-self: flex-end;
-        margin-top: 6rem;
-        font-weight: 600;
-        color: ${black};
-        line-height: 1;
+        font-size: 100px;
     }
     
     .heading {
-        display: flex;
+        display: block;
         font-family: 'Work Sans';
         font-size: ${sanitizeHtml(fontSize)};
         font-weight: 400;
@@ -112,10 +80,27 @@ function getCss(theme: string, fontSize: string) {
         color: ${white};
         font-weight: 400;
         background-color: ${black};
-        padding: 0.5rem 1rem;
-        padding: 0.5rem 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 2.5rem 2rem;
         border: 0.75rem solid ${white};
-        box-shadow: 2rem 2rem 0 0 ${white};
+        box-shadow: 1.75rem 1.75rem 0 0 ${yellow};
+        margin-bottom: 8rem;
+    }
+    
+    .handle {
+        font-family: 'Work Sans';
+        font-size: 4rem;
+        display: flex;
+        flex-direction: column;
+        font-weight: 400;
+        color: ${white};
+        background-color: ${black};
+        padding: 2rem;
+        border: 0.5rem solid ${white};
+        box-shadow: 1.25rem 1.25rem 0 0 ${yellow};
+        line-height: 1;
+        background-color: 
     }`;
 }
 
@@ -130,23 +115,21 @@ export function getHtml(parsedReq: ParsedRequest) {
         ${getCss(theme, fontSize)}
     </style>
     <body>
-        <div>
-            <div class="logo-wrapper">
-                ${images
-                  .map((img, i) => getPlusSign(i) + getImage(img, widths[i], heights[i]))
-                  .join("")}
-            </div>
-
-            <div class="heading">${emojify(md ? marked(text) : sanitizeHtml(text))}
-            </div>
-
-            <div class="handle">@whitep4nth3r</div>
+        <div class="logo-wrapper">
+            ${images
+              .map((img, i) => getPlusSign(i) + getImage(img, widths[i], heights[i]))
+              .join("")}
+              <img src="https://p4nth3rlabs.netlify.app/assets/svgs/banner.svg" alt="whitep4nth3r banner" class="logo-banner" />
         </div>
+
+        <div class="heading">${emojify(md ? marked(text) : sanitizeHtml(text))}</div>
+
+        <div class="handle">@whitep4nth3r</div>
     </body>
 </html>`;
 }
 
-function getImage(src: string, width = "auto", height = "225") {
+function getImage(src: string, width = "300", height = "300") {
   return `<img
         class="logo"
         alt="Generated Image"

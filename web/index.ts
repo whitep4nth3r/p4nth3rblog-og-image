@@ -122,31 +122,20 @@ const fileTypeOptions: DropdownOption[] = [
 ];
 
 const fontSizeOptions: DropdownOption[] = Array.from({ length: 10 })
-  .map((_, i) => i * 25)
+  .map((_, i) => i * 20)
   .filter((n) => n > 0)
   .map((n) => ({ text: n + "px", value: n + "px" }));
 
-const markdownOptions: DropdownOption[] = [
-  { text: "Plain Text", value: "0" },
-  { text: "Markdown", value: "1" },
-];
-
-const imageLightOptions: DropdownOption[] = [
+const _imageOptions: DropdownOption[] = [
   { text: "Cool", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/cool.svg" },
+  { text: "Dolla", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/dolla.svg" },
+  { text: "Fire", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/fire.svg" },
+  { text: "Heart", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/heart.svg" },
+  { text: "LOL", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/lol.svg" },
   { text: "Majick", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/majick.svg" },
-  {
-    text: "Star",
-    value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/star.svg",
-  },
-];
-
-const imageDarkOptions: DropdownOption[] = [
-  { text: "Cool", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/cool.svg" },
-  { text: "Majick", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/majick.svg" },
-  {
-    text: "Star",
-    value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/star.svg",
-  },
+  { text: "PewPew", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/pewpew.svg" },
+  { text: "Star", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/star.svg" },
+  { text: "Troll", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/troll.svg" },
 ];
 
 const widthOptions = [
@@ -197,11 +186,10 @@ const App = (_: any, state: AppState, setState: SetState) => {
   };
   const {
     fileType = "png",
-    fontSize = "75px",
+    fontSize = "80px",
     theme = "light",
-    md = true,
-    text = "**Hello** World",
-    images = [imageLightOptions[0].value],
+    text = "whitep4nth3r",
+    images = [_imageOptions[0].value],
     widths = [],
     heights = [],
     showToast = false,
@@ -210,8 +198,8 @@ const App = (_: any, state: AppState, setState: SetState) => {
     selectedImageIndex = 0,
     overrideUrl = null,
   } = state;
-  const mdValue = md ? "1" : "0";
-  const imageOptions = theme === "light" ? imageLightOptions : imageDarkOptions;
+  const mdValue = "0";
+  const imageOptions = _imageOptions;
   const url = new URL(window.location.origin);
   url.pathname = `${encodeURIComponent(text)}.${fileType}`;
   url.searchParams.append("theme", theme);
@@ -241,7 +229,7 @@ const App = (_: any, state: AppState, setState: SetState) => {
             options: themeOptions,
             value: theme,
             onchange: (val: Theme) => {
-              const options = val === "light" ? imageLightOptions : imageDarkOptions;
+              const options = _imageOptions;
               let clone = [...images];
               clone[0] = options[selectedImageIndex].value;
               setLoadingState({ theme: val, images: clone });
@@ -264,20 +252,12 @@ const App = (_: any, state: AppState, setState: SetState) => {
             onchange: (val: string) => setLoadingState({ fontSize: val }),
           }),
         }),
-        H(Field, {
-          label: "Text Type",
-          input: H(Dropdown, {
-            options: markdownOptions,
-            value: mdValue,
-            onchange: (val: string) => setLoadingState({ md: val === "0" }),
-          }),
-        }),
+
         H(Field, {
           label: "Text Input",
           input: H(TextInput, {
             value: text,
             oninput: (val: string) => {
-              console.log("oninput " + val);
               setLoadingState({ text: val, overrideUrl: url });
             },
           }),
