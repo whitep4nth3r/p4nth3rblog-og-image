@@ -70,6 +70,24 @@ function getCss(theme: string, fontSize: string) {
         font-family: 'Work Sans';
         font-size: 100px;
     }
+
+    .footer {
+        background-color: ${white};
+        color: ${black};
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.5rem;
+        font-size: 42px;
+    }
+
+    .heading-inner {
+        padding: 2.5rem 2rem;
+    }
     
     .heading {
         display: block;
@@ -82,8 +100,8 @@ function getCss(theme: string, fontSize: string) {
         background-color: ${black};
         width: 100%;
         box-sizing: border-box;
-        padding: 2.5rem 2rem;
         border: 0.75rem solid ${white};
+        border-bottom-width: 0;
         box-shadow: 1.75rem 1.75rem 0 0 ${yellow};
         margin-bottom: 8rem;
     }`;
@@ -107,7 +125,12 @@ export function getHtml(parsedReq: ParsedRequest) {
               <img src="https://p4nth3rlabs.netlify.app/assets/svgs/banner.svg" alt="whitep4nth3r banner" class="logo-banner" />
         </div>
 
-        <div class="heading">${emojify(md ? marked(text) : sanitizeHtml(text))}</div>
+        <div class="heading">
+            <div class="heading-inner">
+                ${emojify(md ? marked(text) : sanitizeHtml(text))}
+            </div>
+            <div class="footer">whitep4nth3r.com</div>
+        </div>
     </body>
 </html>`;
 }
