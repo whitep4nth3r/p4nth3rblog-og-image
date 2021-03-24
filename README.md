@@ -2,6 +2,8 @@
 
 # [Open Graph Image as a Service](https://og-image.vercel.app)
 
+![This image was created with this service!](https://p4nth3rblog-og-image.vercel.app/This%20image%20was%20generated%20with%20this%20service!.png?theme=light&md=0&fontSize=80px&images=https%3A%2F%2Fp4nth3rlabs.netlify.app%2Fassets%2Fsvgs%2Fpanthers%2Fmajick.svg)
+
 <a href="https://twitter.com/vercel">
     <img align="right" src="https://og-image.vercel.app/tweet.png" height="300" />
 </a>
@@ -11,7 +13,6 @@ Serverless service that generates dynamic Open Graph images that you can embed i
 For each keystroke, headless chromium is used to render an HTML page and take a screenshot of the result which gets cached.
 
 See the image embedded in the tweet for a real use case.
-
 
 ## What is an Open Graph Image?
 
@@ -32,7 +33,7 @@ It looks like the following:
 
 ## Why use this service?
 
-The short answer is that it would take a long time to painstakingly design an image for every single blog post and every single documentation page. And we don't want the exact same image for every blog post because that wouldn't make the article stand out when it was shared to Twitter. 
+The short answer is that it would take a long time to painstakingly design an image for every single blog post and every single documentation page. And we don't want the exact same image for every blog post because that wouldn't make the article stand out when it was shared to Twitter.
 
 That's where `og-image.vercel.app` comes in. We can simply pass the title of our blog post to our generator service and it will generate the image for us on the fly!
 
@@ -56,7 +57,7 @@ You'll want to fork this repository and deploy your own image generator.
 3. Change directory with `cd og-image`
 4. Make changes by swapping out images, changing colors, etc (see [contributing](https://github.com/vercel/og-image/blob/main/CONTRIBUTING.md) for more info)
 5. Hobby plan users will need to remove all configuration inside `vercel.json` besides `rewrites`
-6. Run locally with `vercel dev` and visit [localhost:3000](http://localhost:3000)  (if nothing happens, run `npm install -g vercel`)
+6. Run locally with `vercel dev` and visit [localhost:3000](http://localhost:3000) (if nothing happens, run `npm install -g vercel`)
 7. Deploy to the cloud by running `vercel` and you'll get a unique URL
 8. Setup [GitHub](https://vercel.com/github) to autodeploy on push
 
