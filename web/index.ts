@@ -19,7 +19,7 @@ const ImagePreview = ({ src, onclick, onload, onerror, loading }: ImagePreviewPr
   return H(
     "a",
     { className: "image-wrapper", href: src, onclick },
-    H("img", { src, onload, onerror, style, title })
+    H("img", { src, onload, onerror, style, title }),
   );
 };
 
@@ -44,9 +44,9 @@ const Dropdown = ({ options, value, onchange, small }: DropdownProps) => {
     H(
       "select",
       { onchange: (e: any) => onchange(e.target.value) },
-      options.map((o) => H("option", { value: o.value, selected: value === o.value }, o.text))
+      options.map((o) => H("option", { value: o.value, selected: value === o.value }, o.text)),
     ),
-    H("div", { className: arrow }, "▼")
+    H("div", { className: arrow }, "▼"),
   );
 };
 
@@ -62,8 +62,8 @@ const TextInput = ({ value, oninput }: TextInputProps) => {
     H(
       "div",
       { className: "input-inner-wrapper" },
-      H("input", { type: "text", value, oninput: (e: any) => oninput(e.target.value) })
-    )
+      H("input", { type: "text", value, oninput: (e: any) => oninput(e.target.value) }),
+    ),
   );
 };
 
@@ -88,8 +88,8 @@ const Field = ({ label, input }: FieldProps) => {
     H(
       "label",
       H("div", { className: "field-label" }, label),
-      H("div", { className: "field-value" }, input)
-    )
+      H("div", { className: "field-value" }, input),
+    ),
   );
 };
 
@@ -106,8 +106,8 @@ const Toast = ({ show, message }: ToastProps) => {
     H(
       "div",
       { className: "toast-outer", style },
-      H("div", { className: "toast-inner" }, H("div", { className: "toast-message" }, message))
-    )
+      H("div", { className: "toast-inner" }, H("div", { className: "toast-message" }, message)),
+    ),
   );
 };
 
@@ -128,13 +128,16 @@ const fontSizeOptions: DropdownOption[] = Array.from({ length: 10 })
 
 const _imageOptions: DropdownOption[] = [
   { text: "Cool", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/cool.svg" },
+  { text: "Coffee", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/coffee.svg" },
   { text: "Dolla", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/dolla.svg" },
   { text: "Fire", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/fire.svg" },
   { text: "Heart", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/heart.svg" },
   { text: "LOL", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/lol.svg" },
   { text: "Majick", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/majick.svg" },
   { text: "PewPew", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/pewpew.svg" },
+  { text: "Rap", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/rap.svg" },
   { text: "Star", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/star.svg" },
+  { text: "Tattoo", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/tattoo.svg" },
   { text: "Troll", value: "https://p4nth3rlabs.netlify.app/assets/svgs/panthers/troll.svg" },
 ];
 
@@ -298,8 +301,8 @@ const App = (_: any, state: AppState, setState: SetState) => {
                   clone[0] = val;
                   setLoadingState({ heights: clone });
                 },
-              })
-            )
+              }),
+            ),
           ),
         }),
         ...images.slice(1).map((image, i) =>
@@ -337,7 +340,7 @@ const App = (_: any, state: AppState, setState: SetState) => {
                     clone[i + 1] = val;
                     setLoadingState({ heights: clone });
                   },
-                })
+                }),
               ),
               H(
                 "div",
@@ -356,10 +359,10 @@ const App = (_: any, state: AppState, setState: SetState) => {
                       heights: heightsClone,
                     });
                   },
-                })
-              )
+                }),
+              ),
             ),
-          })
+          }),
         ),
         H(Field, {
           label: `Image ${images.length + 1}`,
@@ -373,8 +376,8 @@ const App = (_: any, state: AppState, setState: SetState) => {
               setLoadingState({ images: [...images, nextImage] });
             },
           }),
-        })
-      )
+        }),
+      ),
     ),
     H(
       "div",
@@ -398,12 +401,12 @@ const App = (_: any, state: AppState, setState: SetState) => {
           }
           return false;
         },
-      })
+      }),
     ),
     H(Toast, {
       message: messageToast,
       show: showToast,
-    })
+    }),
   );
 };
 
