@@ -235,7 +235,6 @@ label {
   right: 0;
   transition: all 0.4s ease;
   transform: translate3d(0, 130%, 0px) scale(1);
-  animation: show-jsx-1861505484 0.4s ease forwards;
   opacity: 1;
 }
 
@@ -299,33 +298,5 @@ img {
   .field-label {
     width: 60px;
     font-size: 13px;
-  }
-}
-
-.github-corner:hover .octo-arm {
-  animation: octocat-wave 560ms ease-in-out;
-}
-
-@keyframes octocat-wave {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  20%,
-  60% {
-    transform: rotate(-25deg);
-  }
-  40%,
-  80% {
-    transform: rotate(10deg);
-  }
-}
-
-@media (max-width: 500px) {
-  .github-corner:hover .octo-arm {
-    animation: none;
-  }
-  .github-corner .octo-arm {
-    animation: octocat-wave 560ms ease-in-out;
   }
 }
